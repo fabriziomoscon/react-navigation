@@ -15,7 +15,6 @@ import {
   NavigationActions,
   addNavigationHelpers,
   StackNavigator,
-  DrawerNavigator,
 } from 'react-navigation';
 import {
   Provider,
@@ -101,26 +100,23 @@ MainScreen.navigationOptions = {
   title: 'Home Screen',
 };
 
-const AppStackNavigator = StackNavigator({
+const AppNavigator = StackNavigator({
   Login: { screen: LoginScreen },
   Main: { screen: MainScreen },
   Profile: { screen: ProfileScreen },
 });
 
-const RootNavigator = DrawerNavigator({
-  App: { screen: AppStackNavigator },
-});
-
 const AppWithNavigationState = connect(state => ({
   nav: state.nav,
 }))(({ dispatch, nav }) => (
-  <RootNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />
+  <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />
 ));
 
 const initialNavState = {
-  index: 0,
+  index: 1,
   routes: [
-    { key: 'InitA', routeName: 'App' },
+    { key: 'InitA', routeName: 'Main' },
+    { key: 'InitB', routeName: 'Login' },
   ],
 };
 
@@ -129,12 +125,12 @@ const initialAuthState = { isLoggedIn: false };
 const AppReducer = combineReducers({
   nav: (state = initialNavState, action) => {
     if (action.type === 'Login') {
-      return RootNavigator.router.getStateForAction(NavigationActions.back(), state);
+      return AppNavigator.router.getStateForAction(NavigationActions.back(), state);
     }
     if (action.type === 'Logout') {
-      return RootNavigator.router.getStateForAction(NavigationActions.navigate({ routeName: 'Login' }), state);
+      return AppNavigator.router.getStateForAction(NavigationActions.navigate({ routeName: 'Login' }), state);
     }
-    return RootNavigator.router.getStateForAction(action, state);
+    return AppNavigator.router.getStateForAction(action, state);
   },
   auth: (state = initialAuthState, action) => {
     if (action.type === 'Login') {
