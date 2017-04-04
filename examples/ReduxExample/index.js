@@ -14,7 +14,7 @@ import {
 import {
   NavigationActions,
   addNavigationHelpers,
-  StackNavigator,
+  DrawerNavigator,
 } from 'react-navigation';
 import {
   Provider,
@@ -100,7 +100,7 @@ MainScreen.navigationOptions = {
   title: 'Home Screen',
 };
 
-const AppNavigator = StackNavigator({
+const AppNavigator = DrawerNavigator({
   Login: { screen: LoginScreen },
   Main: { screen: MainScreen },
   Profile: { screen: ProfileScreen },
@@ -113,10 +113,9 @@ const AppWithNavigationState = connect(state => ({
 ));
 
 const initialNavState = {
-  index: 1,
+  index: 0,
   routes: [
-    { key: 'InitA', routeName: 'Main' },
-    { key: 'InitB', routeName: 'Login' },
+    { key: 'Login', routeName: 'Login' },
   ],
 };
 
