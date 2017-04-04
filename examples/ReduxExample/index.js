@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import {
   addNavigationHelpers,
-  StackNavigator,
+  DrawerNavigator,
 } from 'react-navigation';
 import {
   Provider,
@@ -99,7 +99,7 @@ MainScreen.navigationOptions = {
   title: 'Home Screen',
 };
 
-const AppNavigator = StackNavigator({
+const AppNavigator = DrawerNavigator({
   Login: { screen: LoginScreen },
   Main: { screen: MainScreen },
   Profile: { screen: ProfileScreen },
@@ -115,10 +115,9 @@ const AppReducer = combineReducers({
   nav: (state, action) => {
     if (!state) {
       state = {
-        index: 1,
+        index: 0,
         routes: [
-          { key: 'InitA', routeName: 'Main' },
-          { key: 'InitB', routeName: 'Login' },
+          { key: 'Login', routeName: 'Login' },
         ],
       };
     }
