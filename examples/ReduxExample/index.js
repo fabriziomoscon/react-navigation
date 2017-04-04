@@ -117,12 +117,7 @@ const AppWithNavigationState = connect(state => ({
   <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />
 ));
 
-const initialNavState = {
-  index: 0,
-  routes: [
-    { key: 'InitA', routeName: 'Drawer' },
-  ],
-};
+const initialNavState = AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams('Drawer'));
 
 const initialAuthState = { isLoggedIn: false };
 
