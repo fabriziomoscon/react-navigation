@@ -14,6 +14,7 @@ import {
 import {
   NavigationActions,
   addNavigationHelpers,
+  StackNavigator,
   DrawerNavigator,
 } from 'react-navigation';
 import {
@@ -100,10 +101,14 @@ MainScreen.navigationOptions = {
   title: 'Home Screen',
 };
 
-const AppNavigator = DrawerNavigator({
+const AppDrawerNavigator = DrawerNavigator({
   Login: { screen: LoginScreen },
   Main: { screen: MainScreen },
   Profile: { screen: ProfileScreen },
+});
+
+const AppNavigator = StackNavigator({
+  Drawer: { screen: AppDrawerNavigator },
 });
 
 const AppWithNavigationState = connect(state => ({
@@ -115,7 +120,7 @@ const AppWithNavigationState = connect(state => ({
 const initialNavState = {
   index: 0,
   routes: [
-    { key: 'Login', routeName: 'Login' },
+    { key: 'InitA', routeName: 'Drawer' },
   ],
 };
 
@@ -123,8 +128,6 @@ const initialAuthState = { isLoggedIn: false };
 
 const AppReducer = combineReducers({
   nav: (state = initialNavState, action) => {
-    return state;
-
     if (action.type === 'Login') {
       return AppNavigator.router.getStateForAction(NavigationActions.back(), state);
     }
