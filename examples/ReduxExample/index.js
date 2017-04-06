@@ -106,12 +106,14 @@ const AppNavigator = StackNavigator({
   Profile: { screen: ProfileScreen },
 });
 
-const AppWithoutNavigationState = () => (
-  <AppNavigator />
-);
+const AppInnerWithNavigationState = connect(state => ({
+  navInner: state.navInner,
+}))(({ dispatch, navInner }) => (
+  <AppNavigator navigation={addNavigationHelpers({ dispatch, state: navInner })} />
+));
 
 const RootNavigator = StackNavigator({
-  Root: { screen: AppWithoutNavigationState },
+  Root: { screen: AppInnerWithNavigationState },
 });
 
 const AppWithNavigationState = connect(state => ({
@@ -120,17 +122,25 @@ const AppWithNavigationState = connect(state => ({
   <RootNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />
 ));
 
-const initialNavState = {
-  index: 0,
-  routes: [
-    { key: 'Init', routeName: 'Root' },
-  ],
-};
+const initialNavState = RootNavigator.router.getStateForAction(
+  RootNavigator.router.getActionForPathAndParams('Root'));
+
+console.debug('initialNavState:', initialNavState);
+
+const initialNavInnerState = AppNavigator.router.getStateForAction(
+  AppNavigator.router.getActionForPathAndParams('Login'));
+
+console.debug('initialNavInnerState:', initialNavInnerState);
 
 const initialAuthState = { isLoggedIn: false };
 
 const AppReducer = combineReducers({
   nav: (state = initialNavState, action) => {
+    return RootNavigator.router.getStateForAction(action, state);
+  },
+  navInner: (state = initialNavInnerState, action) => {
+    console.debug('Received action:', action);
+
     if (action.type === 'Login') {
       return AppNavigator.router.getStateForAction(NavigationActions.back(), state);
     }
