@@ -144,7 +144,8 @@ const AppReducer = combineReducers({
 });
 
 class ReduxExampleApp extends React.Component {
-  store = createStore(AppReducer, undefined, autoRehydrate());
+  // store = createStore(AppReducer, undefined, autoRehydrate());
+  store = createStore(AppReducer);
 
   componentDidMount() {
     persistStore(this.store, { storage: AsyncStorage });
