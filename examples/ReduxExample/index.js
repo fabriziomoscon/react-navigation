@@ -122,15 +122,20 @@ const AppWithNavigationState = connect(state => ({
   <RootNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />
 ));
 
-const initialNavState = RootNavigator.router.getStateForAction(
-  RootNavigator.router.getActionForPathAndParams('Root'));
+const initialNavState = {
+  index: 0,
+  routes: [
+    { key: 'Init', routeName: 'Root' },
+  ],
+};
 
-console.debug('initialNavState:', initialNavState);
-
-const initialNavInnerState = AppNavigator.router.getStateForAction(
-  AppNavigator.router.getActionForPathAndParams('Login'));
-
-console.debug('initialNavInnerState:', initialNavInnerState);
+const initialNavInnerState = {
+  index: 1,
+  routes: [
+    { key: 'InitA', routeName: 'Main' },
+    { key: 'InitB', routeName: 'Login' },
+  ],
+};
 
 const initialAuthState = { isLoggedIn: false };
 
