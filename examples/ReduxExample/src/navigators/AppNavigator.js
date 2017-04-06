@@ -6,10 +6,18 @@ import LoginScreen from '../components/LoginScreen';
 import MainScreen from '../components/MainScreen';
 import ProfileScreen from '../components/ProfileScreen';
 
-export const AppNavigator = StackNavigator({
+const NestedNavigator = StackNavigator({
   Login: { screen: LoginScreen },
   Main: { screen: MainScreen },
   Profile: { screen: ProfileScreen },
+});
+
+const AppWithoutNavigationState = () => (
+  <NestedNavigator />
+);
+
+export const AppNavigator = StackNavigator({
+  Root: { screen: AppWithoutNavigationState },
 });
 
 const AppWithNavigationState = ({ dispatch, nav }) => (
