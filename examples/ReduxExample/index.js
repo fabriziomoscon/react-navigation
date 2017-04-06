@@ -106,17 +106,24 @@ const AppNavigator = StackNavigator({
   Profile: { screen: ProfileScreen },
 });
 
+const AppWithoutNavigationState = () => (
+  <AppNavigator />
+);
+
+const RootNavigator = StackNavigator({
+  Root: { screen: AppWithoutNavigationState },
+});
+
 const AppWithNavigationState = connect(state => ({
   nav: state.nav,
 }))(({ dispatch, nav }) => (
-  <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />
+  <RootNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />
 ));
 
 const initialNavState = {
-  index: 1,
+  index: 0,
   routes: [
-    { key: 'InitA', routeName: 'Main' },
-    { key: 'InitB', routeName: 'Login' },
+    { key: 'Init', routeName: 'Root' },
   ],
 };
 
