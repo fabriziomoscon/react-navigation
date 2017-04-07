@@ -5,10 +5,9 @@ import { AppNavigator } from '../navigators/AppNavigator';
 
 // Start with two routes: The Main screen, with the Login screen on top.
 const initialNavState = {
-  index: 1,
+  index: 0,
   routes: [
-    { key: 'InitA', routeName: 'Main' },
-    { key: 'InitB', routeName: 'Login' },
+    { key: 'Init', routeName: 'Login' },
   ],
 };
 
