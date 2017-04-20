@@ -1,13 +1,13 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { addNavigationHelpers, DrawerNavigator } from 'react-navigation';
+import { addNavigationHelpers, DrawerNavigator, StackNavigator } from 'react-navigation';
 
 import LoginScreen from '../components/LoginScreen';
 import MainScreen from '../components/MainScreen';
 import ProfileScreen from '../components/ProfileScreen';
 
 export const AppNavigator = DrawerNavigator({
-  Login: { screen: LoginScreen },
+  LoginStack: { screen: StackNavigator({ Login: { screen: LoginScreen } }) },
   Main: { screen: MainScreen },
   Profile: { screen: ProfileScreen },
 });
