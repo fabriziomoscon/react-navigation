@@ -6,13 +6,11 @@ import LoginScreen from '../components/LoginScreen';
 import MainScreen from '../components/MainScreen';
 import ProfileScreen from '../components/ProfileScreen';
 
-export const AppNavigator = DrawerNavigator({
+export const RootStackNav = DrawerNavigator({
   LoginStack: { screen: StackNavigator({ Login: { screen: LoginScreen } }) },
   Main: { screen: MainScreen },
   Profile: { screen: ProfileScreen },
 });
-
-export const RootStackNav = StackNavigator({ Root: { screen: AppNavigator } });
 
 const AppWithNavigationState = ({ dispatch, nav }) => (
   <RootStackNav navigation={addNavigationHelpers({ dispatch, state: nav })} />

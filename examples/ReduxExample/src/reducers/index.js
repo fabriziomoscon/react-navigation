@@ -3,7 +3,7 @@ import { NavigationActions } from 'react-navigation';
 
 import { RootStackNav } from '../navigators/AppNavigator';
 
-const initialNavState = RootStackNav.router.getStateForAction(RootStackNav.router.getActionForPathAndParams('Root'));
+const initialNavState = RootStackNav.router.getStateForAction(RootStackNav.router.getActionForPathAndParams('LoginStack'));
 
 console.log('@@@ initialNavState', JSON.stringify(initialNavState, null, '  '));
 
