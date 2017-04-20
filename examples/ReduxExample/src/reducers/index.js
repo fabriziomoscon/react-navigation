@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { NavigationActions } from 'react-navigation';
+import { NavigationActions, StackNavigator, DrawerNavigator, TabNavigator } from 'react-navigation';
 
 import { AppNavigator } from '../navigators/AppNavigator';
 
@@ -12,7 +12,11 @@ const initialNavState = {
   ],
 };
 
-console.log('@@@ initialNavState', JSON.stringify(initialNavState, null, '  '));
+const TestNavigator = StackNavigator({
+  StackA: { screen: () => null },
+});
+const testState = TestNavigator.router.getStateForAction(TestNavigator.router.getActionForPathAndParams('StackA'));
+console.log('@@@ testState', JSON.stringify(testState, null, '  '));
 
 const initialAuthState = { isLoggedIn: false };
 
