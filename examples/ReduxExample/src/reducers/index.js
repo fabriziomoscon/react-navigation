@@ -12,13 +12,13 @@ const initialNavState = {
   ],
 };
 
-const DrawerInStack = DrawerNavigator({
-  DrawerB: { screen: () => null },
+const StackInDrawer = StackNavigator({
+  StackB: { screen: () => null },
 });
-const TestNavigator = StackNavigator({
-  StackA: { screen: DrawerInStack },
+const TestNavigator = DrawerNavigator({
+  DrawerA: { screen: StackInDrawer },
 });
-const testState = TestNavigator.router.getStateForAction(TestNavigator.router.getActionForPathAndParams('StackA'));
+const testState = TestNavigator.router.getStateForAction(TestNavigator.router.getActionForPathAndParams('DrawerA'));
 console.log('@@@ testState', JSON.stringify(testState, null, '  '));
 
 const initialAuthState = { isLoggedIn: false };
