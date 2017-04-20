@@ -12,6 +12,8 @@ const initialNavState = {
   ],
 };
 
+console.log('@@@ initialNavState', JSON.stringify(initialNavState, null, '  '));
+
 const initialAuthState = { isLoggedIn: false };
 
 function nav(state = initialNavState, action) {
