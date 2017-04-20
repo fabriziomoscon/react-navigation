@@ -54,6 +54,8 @@ export default (
       action: NavigationAction | { action: NavigationAction },
       inputState?: ?NavigationState
     ): ?NavigationState {
+      console.log('@@@ getStateForAction', action, inputState);
+
        // eslint-disable-next-line no-param-reassign
       action = NavigationActions.mapDeprecatedActionAndWarn(action);
 
@@ -102,6 +104,9 @@ export default (
       const activeTabLastState = state.routes[state.index];
       const activeTabRouter = tabRouters[order[state.index]];
       if (activeTabRouter) {
+        // TODO: BUG IS HERE
+        tabRouters;
+        activeTabRouter;
         const activeTabState = activeTabRouter.getStateForAction(
           action.action || action,
           activeTabLastState,
