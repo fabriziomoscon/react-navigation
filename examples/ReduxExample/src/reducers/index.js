@@ -4,7 +4,8 @@ import { NavigationActions } from 'react-navigation';
 import { AppNavigator } from '../navigators/AppNavigator';
 
 const initialNavState = AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams('LoginStack'));
-console.log('@@@ initialNavState', initialNavState);
+
+console.log('@@@ initialNavState', JSON.stringify(initialNavState, null, '  '));
 
 const initialAuthState = { isLoggedIn: false };
 
