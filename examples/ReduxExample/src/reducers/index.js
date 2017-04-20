@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 import { NavigationActions } from 'react-navigation';
 
-import { AppNavigator } from '../navigators/AppNavigator';
+import { RootStackNav } from '../navigators/AppNavigator';
 
-const initialNavState = AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams('LoginStack'));
+const initialNavState = RootStackNav.router.getStateForAction(RootStackNav.router.getActionForPathAndParams('Root'));
 
 console.log('@@@ initialNavState', JSON.stringify(initialNavState, null, '  '));
 
@@ -12,11 +12,11 @@ const initialAuthState = { isLoggedIn: false };
 function nav(state = initialNavState, action) {
   switch (action.type) {
     case 'Login':
-      return AppNavigator.router.getStateForAction(NavigationActions.back(), state);
+      return RootStackNav.router.getStateForAction(NavigationActions.back(), state);
     case 'Logout':
-      return AppNavigator.router.getStateForAction(NavigationActions.navigate({ routeName: 'Login' }), state);
+      return RootStackNav.router.getStateForAction(NavigationActions.navigate({ routeName: 'Login' }), state);
     default:
-      return AppNavigator.router.getStateForAction(action, state);
+      return RootStackNav.router.getStateForAction(action, state);
   }
 }
 

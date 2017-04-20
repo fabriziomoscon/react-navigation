@@ -12,8 +12,10 @@ export const AppNavigator = DrawerNavigator({
   Profile: { screen: ProfileScreen },
 });
 
+export const RootStackNav = StackNavigator({ Root: { screen: AppNavigator } });
+
 const AppWithNavigationState = ({ dispatch, nav }) => (
-  <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />
+  <RootStackNav navigation={addNavigationHelpers({ dispatch, state: nav })} />
 );
 
 AppWithNavigationState.propTypes = {
