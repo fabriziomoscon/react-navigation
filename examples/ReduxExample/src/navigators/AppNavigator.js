@@ -7,9 +7,11 @@ import MainScreen from '../components/MainScreen';
 import ProfileScreen from '../components/ProfileScreen';
 
 export const RootStackNav = DrawerNavigator({
-  LoginStack: { screen: StackNavigator({ Login: { screen: LoginScreen } }) },
-  Main: { screen: MainScreen },
-  Profile: { screen: ProfileScreen },
+  Root: { screen: StackNavigator({
+    LoginStack: { screen: StackNavigator({ Login: { screen: LoginScreen } }) },
+    Main: { screen: MainScreen },
+    Profile: { screen: ProfileScreen },
+  })},
 });
 
 const AppWithNavigationState = ({ dispatch, nav }) => (
