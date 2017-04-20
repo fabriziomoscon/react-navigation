@@ -3,13 +3,8 @@ import { NavigationActions } from 'react-navigation';
 
 import { AppNavigator } from '../navigators/AppNavigator';
 
-// Start with two routes: The Main screen, with the Login screen on top.
-const initialNavState = {
-  index: 0,
-  routes: [
-    { key: 'Init', routeName: 'Login' },
-  ],
-};
+const initialNavState = AppNavigator.router.getStateForAction(AppNavigator.router.getActionForPathAndParams('LoginStack'));
+console.log('@@@ initialNavState', initialNavState);
 
 const initialAuthState = { isLoggedIn: false };
 
