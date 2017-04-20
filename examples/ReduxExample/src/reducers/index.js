@@ -12,11 +12,11 @@ const initialNavState = {
   ],
 };
 
-const StackInStack = StackNavigator({
-  StackB: { screen: () => null },
+const DrawerInStack = DrawerNavigator({
+  DrawerB: { screen: () => null },
 });
 const TestNavigator = StackNavigator({
-  StackA: { screen: StackInStack },
+  StackA: { screen: DrawerInStack },
 });
 const testState = TestNavigator.router.getStateForAction(TestNavigator.router.getActionForPathAndParams('StackA'));
 console.log('@@@ testState', JSON.stringify(testState, null, '  '));
