@@ -9,7 +9,12 @@ const tempNavState = AppNavigator.router.getStateForAction(firstAction);
 const secondAction = AppNavigator.router.getActionForPathAndParams('Login');
 const initialNavState = AppNavigator.router.getStateForAction(secondAction, tempNavState);
 
+console.log('@@@ initialNavState', JSON.stringify(initialNavState, null, 2));
+
 function nav(state = initialNavState, action) {
+  // Trivialized for the sake of testing.
+  return state;
+
   let nextState;
   switch (action.type) {
     case 'Login':
