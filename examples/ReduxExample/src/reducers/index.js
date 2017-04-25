@@ -11,7 +11,7 @@ console.log('@@@ initialNavState', JSON.stringify(initialNavState, null, 2));
 
 function nav(state = initialNavState, action) {
   // Trivialized for the sake of testing.
-  return state;
+  // return state;
 
   let nextState;
   switch (action.type) {
