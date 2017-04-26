@@ -6,17 +6,23 @@ import LoginScreen from '../components/LoginScreen';
 import MainScreen from '../components/MainScreen';
 import ProfileScreen from '../components/ProfileScreen';
 
+const DrawerNav = DrawerNavigator({
+  LoginTabs: {
+    screen: TabNavigator({
+      Login: { screen: LoginScreen },
+    })
+  },
+  Main: { screen: MainScreen },
+  Profile: { screen: ProfileScreen },
+});
+
+const AppWithoutNavigationState = () => (
+  <DrawerNav />
+);
+
 export const AppNavigator = StackNavigator({
   Root: {
-    screen: DrawerNavigator({
-      LoginTabs: {
-        screen: TabNavigator({
-          Login: { screen: LoginScreen },
-        })
-      },
-      Main: { screen: MainScreen },
-      Profile: { screen: ProfileScreen },
-    }),
+    screen: AppWithoutNavigationState,
   },
   SomethingElse: { screen: () => null },
 });
