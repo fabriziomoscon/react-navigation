@@ -64,6 +64,26 @@ DraftsScreen.navigationOptions = {
   ),
 };
 
+const RefreshButton = () => null;
+RefreshButton.navigationOptions = ({ navigation }) => ({
+  drawerLabel: navigation.state.params.isRefreshing ? 'Refreshing...' : 'Refresh',
+  drawerIcon: ({ tintColor }) => (
+    <MaterialIcons
+      name="refresh"
+      size={24}
+      style={{ color: tintColor }}
+    />
+  ),
+  drawerOnPress: () => {
+    navigation.setParams({ isRefreshing: true });
+
+    // Finish refreshing after a short delay.
+    setTimeout(() => {
+      navigation.setParams({ isRefreshing: false });
+    }, 500);
+  },
+});
+
 const MailboxesLabel = () => null;
 MailboxesLabel.navigationOptions = {
   drawerLabel: 'Mailboxes',
@@ -71,6 +91,9 @@ MailboxesLabel.navigationOptions = {
 };
 
 const DrawerExample = DrawerNavigator({
+  RefreshButton: {
+    screen: RefreshButton,
+  },
   MailboxesLabel: {
     screen: MailboxesLabel,
   },
