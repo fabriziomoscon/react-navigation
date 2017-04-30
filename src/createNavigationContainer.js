@@ -152,6 +152,13 @@ export default function createNavigationContainer<T: *>(
       this._validateProps(nextProps);
     }
 
+    componentDidUpdate() {
+      // Clear cached _nav every tick
+      if (this._nav === this.state.nav) {
+        this._nav = null;
+      }
+    }
+
     componentDidMount() {
       if (!this._isStateful()) {
         return;
@@ -174,15 +181,22 @@ export default function createNavigationContainer<T: *>(
       this.subs && this.subs.remove();
     }
 
+    // Per-tick temporary storage for state.nav
+    _nav: ?NavigationState;
+
     dispatch = (action: NavigationAction) => {
-      const { state } = this;
       if (!this._isStateful()) {
         return false;
       }
-      const nav = Component.router.getStateForAction(action, state.nav);
-      if (nav && nav !== state.nav) {
+
+      this._nav = this._nav || this.state.nav;
+      const prevNav = this._nav;
+      const nav = Component.router.getStateForAction(action, prevNav);
+      if (nav && nav !== prevNav) {
+        // Cache updates to state.nav during the tick to ensure that subsequent calls will not discard this change
+        this._nav = nav;
         this.setState({ nav }, () =>
-          this._onNavigationStateChange(state.nav, nav, action));
+          this._onNavigationStateChange(prevNav, nav, action));
         return true;
       }
       return false;
