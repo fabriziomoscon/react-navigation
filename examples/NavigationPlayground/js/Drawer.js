@@ -67,7 +67,7 @@ DraftsScreen.navigationOptions = {
 const MailboxesLabel = () => null;
 MailboxesLabel.navigationOptions = {
   drawerLabel: 'Mailboxes',
-  drawerOnPress: () => {},
+  drawerOnPress: null,
 };
 
 const DrawerExample = DrawerNavigator({
