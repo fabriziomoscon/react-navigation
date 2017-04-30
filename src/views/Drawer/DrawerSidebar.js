@@ -70,6 +70,11 @@ class DrawerSidebar extends PureComponent<void, Props, void> {
     return null;
   };
 
+  _drawerOnPress = ({ route }: DrawerScene) => {
+    const { drawerOnPress } = this._getScreenOptions(route.key);
+    return drawerOnPress;
+  };
+
   render() {
     const ContentComponent = this.props.contentComponent;
     return (
@@ -81,6 +86,7 @@ class DrawerSidebar extends PureComponent<void, Props, void> {
           getScreenOptions={this._getScreenOptions}
           getLabel={this._getLabel}
           renderIcon={this._renderIcon}
+          getDrawerOnPress={this._drawerOnPress}
           router={this.props.router}
         />
       </View>
