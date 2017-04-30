@@ -44,13 +44,14 @@ const DrawerNavigatorItems = (
     inactiveBackgroundColor,
     getLabel,
     renderIcon,
-    getDrawerOnPress,
+    getScreenOptions,
     style,
     labelStyle,
   }: Props,
 ) => (
   <View style={[styles.container, style]}>
     {(items || state.routes).map((route: NavigationRoute, index: number) => {
+      const { drawerOnPress } = getScreenOptions(route.key);
       const focused = state.routes[state.index].key === route.key;
       const color = focused ? activeTintColor : inactiveTintColor;
       const backgroundColor = focused
@@ -59,7 +60,6 @@ const DrawerNavigatorItems = (
       const scene = { route, index, focused, tintColor: color };
       const icon = renderIcon(scene);
       const label = getLabel(scene);
-      const drawerOnPress = getDrawerOnPress(scene);
 
       const drawerItem = (
         <View style={[styles.item, { backgroundColor }]}>
