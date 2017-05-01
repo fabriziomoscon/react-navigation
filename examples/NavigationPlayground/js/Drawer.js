@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import {
   DrawerNavigator,
+  DrawerItem,
 } from 'react-navigation';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import SampleText from './SampleText';
@@ -64,39 +65,32 @@ DraftsScreen.navigationOptions = {
   ),
 };
 
-const RefreshButton = () => null;
-RefreshButton.navigationOptions = ({ navigation }) => ({
-  drawerLabel: navigation.state.params.isRefreshing ? 'Refreshing...' : 'Refresh',
-  drawerIcon: ({ tintColor }) => (
-    <MaterialIcons
-      name="refresh"
-      size={24}
-      style={{ color: tintColor }}
+const CustomDrawerItem = (props) => {
+  const { route: item } = props;
+
+  if (item.routeName) {
+    return (
+      <DrawerItem {...props} />
+    );
+  }
+
+  const screenOptions = typeof item.screenOptions === 'function'
+    ? item.screenOptions(props)
+    : item.screenOptions;
+
+  const { drawerIcon, drawerLabel } = screenOptions;
+
+  return (
+    <DrawerItem
+      {...props}
+      renderIcon={(iconProps) => drawerIcon ? drawerIcon(iconProps) : null}
+      getLabel={() => drawerLabel}
+      getScreenOptions={() => screenOptions}
     />
-  ),
-  drawerOnPress: () => {
-    navigation.setParams({ isRefreshing: true });
-
-    // Finish refreshing after a short delay.
-    setTimeout(() => {
-      navigation.setParams({ isRefreshing: false });
-    }, 500);
-  },
-});
-
-const MailboxesLabel = () => null;
-MailboxesLabel.navigationOptions = {
-  drawerLabel: 'Mailboxes',
-  drawerOnPress: null,
+  );
 };
 
-const DrawerExample = DrawerNavigator({
-  RefreshButton: {
-    screen: RefreshButton,
-  },
-  MailboxesLabel: {
-    screen: MailboxesLabel,
-  },
+const drawerRoutes = {
   Inbox: {
     path: '/',
     screen: InboxScreen,
@@ -105,10 +99,47 @@ const DrawerExample = DrawerNavigator({
     path: '/sent',
     screen: DraftsScreen,
   },
-}, {
+};
+
+const drawerItems = [
+  {
+    key: 'RefreshButton',
+    screenOptions: ({ navigation }) => ({
+      drawerLabel: navigation.state.params.isRefreshing ? 'Refreshing...' : 'Refresh',
+      drawerIcon: ({ tintColor }) => (
+        <MaterialIcons
+          name="refresh"
+          size={24}
+          style={{ color: tintColor }}
+        />
+      ),
+      drawerOnPress: () => {
+        navigation.setParams({ isRefreshing: true });
+
+        // Finish refreshing after a short delay.
+        setTimeout(() => {
+          navigation.setParams({ isRefreshing: false });
+        }, 500);
+      },
+    })
+  },
+  {
+    key: 'MailboxesLabel',
+    screenOptions: {
+      drawerLabel: 'Mailboxes',
+      drawerOnPress: null,
+    }
+  },
+  { key: 'Inbox', routeName: 'Inbox' },
+  { key: 'Drafts', routeName: 'Drafts' },
+];
+
+const DrawerExample = DrawerNavigator(drawerRoutes, {
   initialRouteName: 'Drafts',
   contentOptions: {
     activeTintColor: '#e91e63',
+    items: drawerItems,
+    drawerItemComponent: CustomDrawerItem,
   },
 });
 
