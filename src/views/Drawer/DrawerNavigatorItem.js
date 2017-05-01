@@ -12,21 +12,17 @@ import type {
   NavigationRoute,
   Style,
 } from '../../TypeDefinition';
-import type { DrawerScene } from './DrawerView.js';
 
 type Props = {
-  index: number,
   navigation: NavigationScreenProp<NavigationState, NavigationAction>,
   route: NavigationRoute,
-  activeTintColor?: string,
-  activeBackgroundColor?: string,
-  inactiveTintColor?: string,
-  inactiveBackgroundColor?: string,
-  getLabel: (scene: DrawerScene) => ?(React.Element<*> | string),
-  renderIcon: (scene: DrawerScene) => ?React.Element<*>,
-  getScreenOptions: (routeKey: string) => { drawerOnPress?: () => void },
-  getDrawerOnPress: (scene: DrawerScene) => ?() => void,
+  focused?: string,
+  tintColor?: string,
+  backgroundColor?: string,
+  icon?: React.Element<*>,
+  label?: React.Element<*> | string,
   labelStyle?: Style,
+  onPress?: () => void,
 };
 
 /**
@@ -34,32 +30,19 @@ type Props = {
  */
 const DrawerNavigatorItem = (
   {
-    index,
     navigation: {
-      state,
       navigate,
     },
     route,
-    activeTintColor,
-    activeBackgroundColor,
-    inactiveTintColor,
-    inactiveBackgroundColor,
-    getLabel,
-    renderIcon,
-    getScreenOptions,
+    focused,
+    tintColor,
+    backgroundColor,
+    icon,
+    label,
     labelStyle,
+    onPress,
   }: Props,
 ) => {
-  const { drawerOnPress } = getScreenOptions(route.key);
-  const focused = state.routes[state.index].key === route.key;
-  const color = focused ? activeTintColor : inactiveTintColor;
-  const backgroundColor = focused
-    ? activeBackgroundColor
-    : inactiveBackgroundColor;
-  const scene = { route, focused, index, tintColor: color };
-  const icon = renderIcon(scene);
-  const label = getLabel(scene);
-
   const drawerItem = (
     <View style={[styles.item, { backgroundColor }]}>
       {icon
@@ -68,27 +51,25 @@ const DrawerNavigatorItem = (
           </View>
         : null}
       {typeof label === 'string'
-        ? <Text style={[styles.label, { color }, labelStyle]}>
+        ? <Text style={[styles.label, { color: tintColor }, labelStyle]}>
             {label}
           </Text>
         : label}
     </View>
   );
 
-  if (drawerOnPress === null) {
+  if (onPress === null) {
     return drawerItem;
   }
 
+  const defaultOnPress = () => {
+    navigate('DrawerClose');
+    navigate(route.routeName);
+  };
+
   return (
     <TouchableItem
-      onPress={
-        drawerOnPress
-          ? () => drawerOnPress()
-          : () => {
-              navigate('DrawerClose');
-              navigate(route.routeName);
-            }
-      }
+      onPress={() => onPress ? onPress() : defaultOnPress()}
       delayPressIn={0}
     >
       {drawerItem}
