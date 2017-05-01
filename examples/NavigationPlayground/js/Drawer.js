@@ -4,11 +4,11 @@
 
 import React from 'react';
 import {
+  View,
   Button,
   Platform,
   ScrollView,
   StyleSheet,
-  Text,
 } from 'react-native';
 import {
   DrawerNavigator,
@@ -65,6 +65,54 @@ DraftsScreen.navigationOptions = {
   ),
 };
 
+const CustomDrawerItems = (props) => {
+  const {
+    navigation,
+    items,
+    style,
+    activeTintColor,
+    activeBackgroundColor,
+    inactiveTintColor,
+    inactiveBackgroundColor,
+    getLabel,
+    renderIcon,
+    getScreenOptions,
+    ...drawerItemProps
+  } = props;
+
+  return (
+    <View style={[styles.container, style]}>
+      {items.map((item, index) => {
+          const { state } = navigation;
+          const { drawerOnPress } = getScreenOptions(route.key);
+          const focused = state.routes[state.index].key === route.key;
+          const color = focused ? activeTintColor : inactiveTintColor;
+          const backgroundColor = focused
+            ? activeBackgroundColor
+            : inactiveBackgroundColor;
+          const scene = { route, focused, index, tintColor: color };
+          const icon = renderIcon(scene);
+          const label = getLabel(scene);
+
+          return (
+            <CustomDrawerItem
+              {...drawerItemProps}
+              key={route.key}
+              index={index}
+              navigation={navigation}
+              route={route}
+              backgroundColor={backgroundColor}
+              tintColor={color}
+              icon={icon}
+              label={label}
+              onPress={drawerOnPress}
+            />
+          );
+        })}
+    </View>
+  );
+};
+
 const CustomDrawerItem = (props) => {
   const { route: item } = props;
 
@@ -85,8 +133,8 @@ const CustomDrawerItem = (props) => {
   return (
     <DrawerItem
       {...props}
-      renderIcon={(iconProps) => drawerIcon ? drawerIcon(iconProps) : null}
-      getLabel={() => drawerLabel}
+      icon={(iconProps) => drawerIcon ? drawerIcon(iconProps) : null}
+      label={() => drawerLabel}
       getScreenOptions={() => screenOptions}
     />
   );
@@ -147,6 +195,7 @@ const DrawerExample = DrawerNavigator(drawerRoutes, {
     items: drawerItems,
     itemComponent: CustomDrawerItem,
   },
+  contentComponent: CustomDrawerItems,
 });
 
 const styles = StyleSheet.create({
