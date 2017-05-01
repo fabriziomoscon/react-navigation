@@ -26,15 +26,15 @@ const DrawerNavigatorItems = (
   {
     navigation,
     items,
+    itemComponent: ItemComponent,
     style,
-    drawerItemComponent: DrawerItemComponent,
     ...drawerItemProps
   }: Props,
 ) => (
   <View style={[styles.container, style]}>
     {(items || navigation.state.routes)
       .map((route: NavigationRoute) => (
-        <DrawerItemComponent
+        <ItemComponent
           {...drawerItemProps}
           key={route.key}
           navigation={navigation}
@@ -45,7 +45,7 @@ const DrawerNavigatorItems = (
 );
 
 DrawerNavigatorItems.defaultProps = {
-  drawerItemComponent: DrawerNavigatorItem,
+  itemComponent: DrawerNavigatorItem,
 };
 
 const styles = StyleSheet.create({
