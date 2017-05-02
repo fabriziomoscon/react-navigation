@@ -20,9 +20,13 @@ export const AppNavigator = DrawerNavigator({
   },
 });
 
-const AppWithNavigationState = ({ dispatch, nav }) => (
-  <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />
-);
+const AppWithNavigationState = ({ dispatch, nav, showAccounts }) => {
+  console.log('@@@ showAccounts', showAccounts);
+
+  return (
+    <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav })}/>
+  );
+}
 
 AppWithNavigationState.propTypes = {
   dispatch: PropTypes.func.isRequired,
@@ -31,6 +35,7 @@ AppWithNavigationState.propTypes = {
 
 const mapStateToProps = state => ({
   nav: state.nav,
+  showAccounts: state.drawerView.showAccounts,
 });
 
 export default connect(mapStateToProps)(AppWithNavigationState);

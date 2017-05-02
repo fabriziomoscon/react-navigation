@@ -41,9 +41,23 @@ function auth(state = initialAuthState, action) {
   }
 }
 
+const initialDrawerState = { showAccounts: false };
+
+function drawerView(state = initialDrawerState, action) {
+  switch (action.type) {
+    case 'ShowAccounts':
+      return { ...state, showAccounts: true };
+    case 'HideAccounts':
+      return { ...state, showAccounts: false };
+    default:
+      return state;
+  }
+}
+
 const AppReducer = combineReducers({
   nav,
   auth,
+  drawerView,
 });
 
 export default AppReducer;
