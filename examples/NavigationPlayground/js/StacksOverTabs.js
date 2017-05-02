@@ -50,8 +50,8 @@ const MyProfileScreen = ({ navigation }) => (
     navigation={navigation}
   />
 );
-MyProfileScreen.navigationOptions = ({ navigation }) => {
-  title: `${navigation.state.params.name}'s Profile!`
+MyProfileScreen.navigationOptions = {
+  title: ({ state }) => `${state.params.name}'s Profile!`,
 };
 
 const MyNotificationsSettingsScreen = ({ navigation }) => (
@@ -117,8 +117,8 @@ const StacksOverTabs = StackNavigator({
   Profile: {
     screen: MyProfileScreen,
     path: '/people/:name',
-    navigationOptions: ({ navigation }) => {
-      title: `${navigation.state.params.name}'s Profile!`
+    navigationOptions: {
+      title: ({ state }) => `${state.params.name}'s Profile!`,
     },
   },
 });
