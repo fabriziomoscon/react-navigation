@@ -1,20 +1,13 @@
 import { combineReducers } from 'redux';
 import { NavigationActions } from 'react-navigation';
 
-import { getAppNavigator } from '../navigators/AppNavigator';
+import { AppNavigator } from '../navigators/AppNavigator';
 
-function getInitialNavState() {
-  const AppNavigator = getAppNavigator();
+// Start with two routes: The Main screen, with the Login screen on top.
+const tempState = AppNavigator.router.getStateForAction(NavigationActions.navigate({ routeName: 'Main' }));
+const initialNavState = AppNavigator.router.getStateForAction(NavigationActions.navigate({ routeName: 'Login' }), tempState);
 
-  // Start with two routes: The Main screen, with the Login screen on top.
-  const tempState = AppNavigator.router.getStateForAction(NavigationActions.navigate({ routeName: 'Main' }));
-  const initialNavState = AppNavigator.router.getStateForAction(NavigationActions.navigate({ routeName: 'Login' }), tempState);
-  return initialNavState;
-}
-
-function nav(state = getInitialNavState(), action) {
-  const AppNavigator = getAppNavigator();
-
+function nav(state = initialNavState, action) {
   let nextState;
   switch (action.type) {
     case 'Drawer':
