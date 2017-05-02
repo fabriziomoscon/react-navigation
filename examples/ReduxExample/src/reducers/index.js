@@ -10,6 +10,9 @@ const initialNavState = AppNavigator.router.getStateForAction(NavigationActions.
 function nav(state = initialNavState, action) {
   let nextState;
   switch (action.type) {
+    case 'Drawer':
+      nextState = AppNavigator.router.getStateForAction(NavigationActions.navigate({ routeName: 'DrawerOpen' }), state);
+      break;
     case 'Login':
       nextState = AppNavigator.router.getStateForAction(NavigationActions.back(), state);
       break;

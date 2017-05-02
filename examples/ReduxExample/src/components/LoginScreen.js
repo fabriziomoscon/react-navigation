@@ -29,6 +29,10 @@ const LoginScreen = ({ navigation }) => (
       This is great
     </Text>
     <Button
+      onPress={() => navigation.dispatch({ type: 'Drawer' })}
+      title="Open drawer"
+    />
+    <Button
       onPress={() => navigation.dispatch({ type: 'Login' })}
       title="Log in"
     />
