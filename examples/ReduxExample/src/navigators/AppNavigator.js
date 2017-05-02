@@ -64,7 +64,7 @@ const CustomDrawerItems = (props) => {
   );
 };
 
-export const AppNavigator = DrawerNavigator({
+export const getAppNavigator = () => DrawerNavigator({
   Login: { screen: LoginScreen },
   Main: { screen: MainScreen },
   Profile: { screen: ProfileScreen },
@@ -90,6 +90,8 @@ export const AppNavigator = DrawerNavigator({
 
 const AppWithNavigationState = ({ dispatch, nav, showAccounts }) => {
   console.log('@@@ showAccounts', showAccounts);
+
+  const AppNavigator = getAppNavigator();
 
   return (
     <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav })}/>
