@@ -50,9 +50,9 @@ const MyProfileScreen = ({ navigation }) => (
     navigation={navigation}
   />
 );
-MyProfileScreen.navigationOptions = ({ navigation }) => ({
-  title: `${navigation.state.params.name}'s Profile!`,
-});
+MyProfileScreen.navigationOptions = ({ navigation }) => {
+  title: `${navigation.state.params.name}'s Profile!`
+};
 
 const MyNotificationsSettingsScreen = ({ navigation }) => (
   <MyNavScreen
@@ -68,44 +68,12 @@ const MySettingsScreen = ({ navigation }) => (
   />
 );
 
-const MainTab = StackNavigator({
-  Home: {
+const TabNav = TabNavigator({
+  MainTab: {
     screen: MyHomeScreen,
     path: '/',
     navigationOptions: {
       title: 'Welcome',
-    },
-  },
-  Profile: {
-    screen: MyProfileScreen,
-    path: '/people/:name',
-    navigationOptions: ({ navigation }) => ({
-      title: `${navigation.state.params.name}'s Profile!`,
-    }),
-  },
-});
-
-const SettingsTab = StackNavigator({
-  Settings: {
-    screen: MySettingsScreen,
-    path: '/',
-    navigationOptions: () => ({
-      title: 'Settings',
-    }),
-  },
-  NotifSettings: {
-    screen: MyNotificationsSettingsScreen,
-    navigationOptions: {
-      title: 'Notifications',
-    },
-  },
-});
-
-const StacksInTabs = TabNavigator({
-  MainTab: {
-    screen: MainTab,
-    path: '/',
-    navigationOptions: {
       tabBarLabel: 'Home',
       tabBarIcon: ({ tintColor, focused }) => (
         <Ionicons
@@ -117,10 +85,10 @@ const StacksInTabs = TabNavigator({
     },
   },
   SettingsTab: {
-    screen: SettingsTab,
+    screen: MySettingsScreen,
     path: '/settings',
     navigationOptions: {
-      tabBarLabel: 'Settings',
+      title: 'Settings',
       tabBarIcon: ({ tintColor, focused }) => (
         <Ionicons
           name={focused ? 'ios-settings' : 'ios-settings-outline'}
@@ -136,4 +104,23 @@ const StacksInTabs = TabNavigator({
   swipeEnabled: false,
 });
 
-export default StacksInTabs;
+const StacksOverTabs = StackNavigator({
+  Root: {
+    screen: TabNav,
+  },
+  NotifSettings: {
+    screen: MyNotificationsSettingsScreen,
+    navigationOptions: {
+      title: 'Notifications',
+    },
+  },
+  Profile: {
+    screen: MyProfileScreen,
+    path: '/people/:name',
+    navigationOptions: ({ navigation }) => {
+      title: `${navigation.state.params.name}'s Profile!`
+    },
+  },
+});
+
+export default StacksOverTabs;

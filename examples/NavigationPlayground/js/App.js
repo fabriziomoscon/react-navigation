@@ -51,6 +51,11 @@ const ExampleRoutes = {
     description: 'Nested stack navigation in tabs',
     screen: StacksInTabs,
   },
+  StacksOverTabs: {
+    name: 'Stacks over Tabs',
+    description: 'Nested stack navigation over tabs',
+    screen: StacksInTabs,
+  },
   LinkStack: {
     name: 'Link in Stack',
     description: 'Deep linking into a route in stack',
