@@ -41,7 +41,19 @@ function auth(state = initialAuthState, action) {
   }
 }
 
-const initialDrawerState = { showAccounts: false };
+const accountItems = [
+  {
+    key: 'A',
+    screenOptions: ({ navigation }) => ({
+      drawerLabel: 'Account A',
+      drawerOnPress: () => {
+        navigation.dispatch({ type: 'HideAccounts' });
+      }
+    }),
+  },
+];
+
+const initialDrawerState = { showAccounts: false, accountItems };
 
 function drawerView(state = initialDrawerState, action) {
   switch (action.type) {

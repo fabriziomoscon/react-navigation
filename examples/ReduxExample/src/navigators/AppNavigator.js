@@ -38,8 +38,18 @@ const CustomDrawerItem = (props) => {
   );
 };
 
-const CustomDrawerItems = (props) => {
-  const { items } = props;
+const UnconnectedCustomDrawerItems = ({ showAccounts, accountItems, items, ...props }) => {
+  console.log('@@@ showAccounts', showAccounts);
+
+  if (showAccounts) {
+    return (
+      <View style={[styles.drawerContainer]}>
+        {accountItems.map((item) => (
+          <CustomDrawerItem {...props} key={item.key} item={item} />
+        ))}
+      </View>
+    );
+  }
 
   return (
     <View style={[styles.drawerContainer]}>
@@ -63,6 +73,13 @@ const CustomDrawerItems = (props) => {
     </View>
   );
 };
+
+const mapDrawerStateToProps = state => ({
+  showAccounts: state.drawerView.showAccounts,
+  accountItems: state.drawerView.accountItems,
+});
+
+const CustomDrawerItems = connect(mapDrawerStateToProps)(UnconnectedCustomDrawerItems);
 
 export const AppNavigator = DrawerNavigator({
   Login: { screen: LoginScreen },
@@ -88,9 +105,7 @@ export const AppNavigator = DrawerNavigator({
   },
 });
 
-const AppWithNavigationState = ({ dispatch, nav, showAccounts }) => {
-  console.log('@@@ showAccounts', showAccounts);
-
+const AppWithNavigationState = ({ dispatch, nav }) => {
   return (
     <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav })}/>
   );
@@ -103,7 +118,6 @@ AppWithNavigationState.propTypes = {
 
 const mapStateToProps = state => ({
   nav: state.nav,
-  showAccounts: state.drawerView.showAccounts,
 });
 
 export default connect(mapStateToProps)(AppWithNavigationState);
