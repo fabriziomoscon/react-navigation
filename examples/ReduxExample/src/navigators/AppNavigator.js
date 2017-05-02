@@ -72,6 +72,15 @@ export const AppNavigator = DrawerNavigator({
   contentComponent: CustomDrawerItems,
   contentOptions: {
     items: [
+      {
+        key: 'ShowAccounts',
+        screenOptions: ({ navigation }) => ({
+          drawerLabel: 'Show Accounts',
+          drawerOnPress: () => {
+            navigation.dispatch({ type: 'ShowAccounts' });
+          }
+        }),
+      },
       { key: 'Login', routeName: 'Login' },
       { key: 'Main', routeName: 'Main' },
       { key: 'Profile', routeName: 'Profile' },
